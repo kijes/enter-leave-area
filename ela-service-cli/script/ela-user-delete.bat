@@ -1,0 +1,1 @@
+call ela-service-cli.bat -userdelete -userid 1

@@ -1,0 +1,112 @@
+body {
+    font-family: Verdana, Helvetica, sans-serif;
+    background-color: #ffffff;
+}
+
+#userListPanel, #consolePanel {
+    width: 650px ;
+    padding-top: 5px ;
+    margin-left: auto ;
+    margin-right: auto ;
+    margin-bottom: 10px ;
+    border-collapse:separate;
+    border:solid #aaaaaa 1px;
+    border-radius:10px;
+    font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+    text-align: center;
+    background-color: #aaaaaa;
+    font-size:1.2em;
+}
+
+#actionButtonsPanel {
+    width: 300px ;
+    margin-left: auto ;
+    margin-right: auto ;
+}
+
+#administrationPanel {
+    width: 650px ;
+    margin-left: auto ;
+    margin-right: auto ;
+}
+
+#createUserPanel {
+    width: 322px ;
+    float: left ;
+    margin-left: 0 ;
+    margin-right: auto ;
+    border-collapse:separate;
+    border: solid #aaaaaa 1px;
+    border-radius:10px;
+    text-align: center;
+    padding-top: 10px;
+}
+
+#autoRefreshPanel {
+    width: 322px ;
+    float: right ;
+    margin-left: auto ;
+    margin-right: 0 ;
+    border-collapse:separate;
+    border:solid #aaaaaa 1px;
+    border-radius:10px;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#usertable
+{
+    font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+    width: 650px;
+    border: none;
+    margin: 15px auto;
+    text-align: center ;
+}
+#usertable td, #usertable th
+{
+    font-size:1em;
+    padding:3px 7px 2px 7px;
+    border-collapse:separate;
+    border:solid #aaaaaa 1px;
+    border-radius:10px;
+}
+#usertable th
+{
+    font-size:1.1em;
+    padding-bottom:4px;
+    background-color: #dddddd;
+    color: #000000;
+    text-align: center ;
+}
+#usertable tr td
+{
+    color:#000000;
+    background-color:#ffffff;
+    font-weight: bold;
+}
+
+#sendButton {
+    width: 248px;
+    margin-top: 10px;
+}
+
+#autoRefreshButton {
+    width: 248px;
+}
+
+button {
+    width: 90px;
+}
+
+input {
+    width: 160px;
+}
+
+#headerStatus {
+    width: 120px;
+}
+
+#headerActions {
+    width: 320px;
+}

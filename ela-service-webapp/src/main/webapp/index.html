@@ -1,0 +1,50 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Enter-Leave Area</title>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="/js/ela.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+        populateUserList();
+        jQuery('#sendButton').button().click(handleCreateButton);
+        jQuery('#autoRefreshButton').button().click(autoRefreshToggle);
+    });
+
+  </script>
+</head>
+<body>
+    <div id="userListPanel">
+        <b>User List</b>
+    </div>
+     <table id="usertable">
+        <tr>
+            <th id="headerUserId">User ID</th>
+            <th id="headerCardId">Card ID</th>
+            <th id="headerStatus">Status</th>
+            <th id="headerActions">Actions</th>
+        </tr>
+     </table>
+    <div id="consolePanel">
+        <b>Administration Console</b>
+    </div>
+    <div id="administrationPanel">
+        <div id="createUserPanel">
+            <form>
+                <label>User ID:</label>
+                <input type="text" id="user_id" name="user_id" /><br>
+                <label>Card ID:</label>
+                <input type="text" id="card_id" name="card_id" /><br>
+                <input id="sendButton" type="button" value="Create User" />
+             </form>
+        </div>
+        <div id="autoRefreshPanel">
+            <button id="autoRefreshButton">Enable Auto Refresh</button>
+        </div>
+    </div>
+</body>
+</html>

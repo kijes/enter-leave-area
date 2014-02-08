@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+ <item android:id="@+id/option_service_url"
+          android:title="@string/menu_service_url"
+          android:showAsAction="never|withText" />
+    <item android:id="@+id/option_user_number"
+          android:title="@string/menu_user_number"
+          android:showAsAction="never|withText" />
+		  
+</menu>

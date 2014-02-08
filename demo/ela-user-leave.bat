@@ -1,0 +1,1 @@
+call ela-service-cli.bat -userleave -cardid 34526E1A12

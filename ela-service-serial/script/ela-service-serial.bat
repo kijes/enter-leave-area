@@ -1,0 +1,1 @@
+%JAVA_HOME%\bin\java -jar ela-service-serial-1.0.0-SNAPSHOT-jar-with-dependencies.jar %*

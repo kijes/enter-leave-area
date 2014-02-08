@@ -1,0 +1,1 @@
+call ela-service-cli.bat -usercreate -userid 1 -cardid 34526E1A12

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ELA Status Reader</string>
+
+    <!-- Main Screen -->
+    <string name="main_status_requesting_status">Requesting status...</string>
+    <string name="main_status_updated_status">Status updated</string>
+    <string name="main_status_error_connection_problem">Connection problem!</string>
+    <string name="main_status_error_malformed_message">Malformed response from server!</string>
+    <string name="main_status_error_resource_problem">Unable to access user resource!</string>
+   	
+    <string name="main_user_number_label">User ID:</string>
+    <string name="main_status_label">Status:</string>
+   	<string name="main_button_refresh">Refresh</string>
+   	<string name="main_status_label_entered_area">ENTERED AREA</string>
+   	<string name="main_status_label_left_area">LEFT AREA</string>
+   	<string name="main_status_label_unknown">UNKNOWN</string>
+
+    <!-- Service URL Screen -->
+    <string name="service_url_title">Enter Service URL</string>
+    <string name="service_url_button_save">Save</string>
+
+    <!-- User Number Screen -->
+    <string name="user_number_title">Enter User ID</string>
+    <string name="user_number_button_save">Save</string>
+    
+    <!-- Menu -->
+    <string name="menu_service_url">Service URL</string>
+    <string name="menu_user_number">User ID</string>
+
+</resources>

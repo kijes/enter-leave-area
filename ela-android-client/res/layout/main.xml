@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="20dp"
+    >
+    <TextView
+        android:id="@+id/user_number_label"
+        style="@style/InfoFont"
+        android:text="@string/main_user_number_label" 
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:id="@+id/user_number_text"
+        style="@style/CrewFont"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp" />
+
+	<TextView
+        android:id="@+id/status_label"
+        style="@style/InfoFont"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/main_status_label" 
+        android:layout_marginBottom="20dp" />
+    
+	<TextView
+        android:id="@+id/status_text"
+        style="@style/StatusFont"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:layout_marginBottom="20dp"/>
+	
+    <Button
+        android:id="@+id/button_refresh"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/main_button_refresh" 
+        android:width="220dp" 
+        android:layout_marginTop="30dp" />
+
+</LinearLayout>
