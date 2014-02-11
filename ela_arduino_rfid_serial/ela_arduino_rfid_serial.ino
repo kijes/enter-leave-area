@@ -3,7 +3,6 @@
  * This code is licensed under MIT license (see LICENSE.txt for details)
  */
 
-
 #include <SPI.h>
 #include <RFID.h>
 
@@ -31,9 +30,9 @@ RFID rfid(SS_PIN, RST_PIN);
 /* 
  * status LEDs
  */
-int redPin = 8;
-int yellowPin = 9;
-int greenPin = 10;
+int RED_PIN = 8;
+int YELLOW_PIN = 9;
+int GREEN_PIN = 10;
 
 /*
  * setup routine to configure:
@@ -47,12 +46,12 @@ void setup()
   Serial.begin(9600);    
   SPI.begin(); 
   rfid.init();
-  pinMode(redPin, OUTPUT);
-  pinMode(yellowPin, OUTPUT);
-  pinMode(greenPin, OUTPUT);
-  digitalWrite(redPin, HIGH);
-  digitalWrite(greenPin, LOW);
-  digitalWrite(yellowPin, LOW);
+  pinMode(RED_PIN, OUTPUT);
+  pinMode(YELLOW_PIN, OUTPUT);
+  pinMode(GREEN_PIN, OUTPUT);
+  digitalWrite(RED_PIN, HIGH);
+  digitalWrite(GREEN_PIN, LOW);
+  digitalWrite(YELLOW_PIN, LOW);
 }
 
 /*
@@ -94,7 +93,7 @@ int parseStatusCommand(char* buffer)
 }
 
 /*
- * reading status from serial (over BT)
+ * reading status from serial
  */
 int readStatus() 
 {
@@ -126,7 +125,7 @@ int readStatus()
 }
 
 /*
- * sending command with card number over serial (over BT)
+ * sending command with card number over serial
  */
 int sendCommand(char* command, unsigned char* serNum)
 {
@@ -148,9 +147,9 @@ int sendCommand(char* command, unsigned char* serNum)
  */
 void showStatusOK()
 {
-  digitalWrite(greenPin, HIGH);
+  digitalWrite(GREEN_PIN, HIGH);
   delay(500);
-  digitalWrite(greenPin, LOW);
+  digitalWrite(GREEN_PIN, LOW);
 }
 
 /*
@@ -158,9 +157,9 @@ void showStatusOK()
  */
 void showStatusWARN()
 {
-  digitalWrite(yellowPin, HIGH);
+  digitalWrite(YELLOW_PIN, HIGH);
   delay(500);
-  digitalWrite(yellowPin, LOW);
+  digitalWrite(YELLOW_PIN, LOW);
 }
 
 /*
@@ -169,9 +168,9 @@ void showStatusWARN()
 void showStatusFAIL()
 {
   for (int i=0;i<5;i++) {
-    digitalWrite(redPin, LOW);
+    digitalWrite(RED_PIN, LOW);
     delay(100);
-    digitalWrite(redPin, HIGH);
+    digitalWrite(RED_PIN, HIGH);
     delay(100);
   }
 }
@@ -192,20 +191,20 @@ void handleCommandStatus(int commandStatus)
 
 /*
  * main loop:
- * - reading RFID card and sending over BT
- * - waiting for response on BT
- * - decodeing command execution status
+ * - reading RFID card
+ * - sending enter/leave commands over serial
+ * - decoding response and showing the status on leds
  */
 void loop()
 {
   unsigned char cardNum[] = {52,82,110,26,18};
   int commandStatus = COMMAND_OK;
   if (rfid.isCard() && rfid.readCardSerial()) {
-    if (rfid.serNum[0] == 52 &&
-        rfid.serNum[1] == 82 &&
-        rfid.serNum[2] == 110 && 
-        rfid.serNum[3] == 26 &&
-        rfid.serNum[4] == 18) {
+    if (rfid.serNum[0] == cardNum[0] &&
+        rfid.serNum[1] == cardNum[1] &&
+        rfid.serNum[2] == cardNum[2] && 
+        rfid.serNum[3] == cardNum[3] &&
+        rfid.serNum[4] == cardNum[4]) {
       commandStatus = sendCommand("ENTER", cardNum);
       handleCommandStatus(commandStatus);
     } else {
