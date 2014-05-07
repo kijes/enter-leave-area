@@ -8,6 +8,7 @@
 #include <SPI.h>
 #include <string.h>
 #include <aJSON.h>
+#include <RFID.h>
 
 /*
  * WiFi modconfiguration
@@ -38,9 +39,27 @@ char* ELA_SERVICE_HOST = "ela-service-webapp.appspot.com";
 #define COMMAND_WARN 1
 #define COMMAND_FAIL 2
 
+/* 
+ * RFID reader
+ */
+#define SS_PIN 6
+#define RST_PIN 7
+
+RFID rfid(SS_PIN, RST_PIN); 
+
+/* 
+ * status LEDs
+ */
+int redLedPin = 8;
+int yellowLedPin = 9;
+int greenLedPin = 10;
+
 uint32_t ip = 0;
 
-const unsigned char cardNum[5] = {52,82,110,26,18}; 
+/* 
+ * card number used for enter command
+ */
+const unsigned char enterCardNum[] = {52,82,110,26,18};
 
 #define DEBUG 1
 #ifdef DEBUG
@@ -74,11 +93,12 @@ uint16_t checkFirmwareVersion()
 void hang(const __FlashStringHelper* msg)
 {
   DEBUG_PRINTLN(msg);
+  showStatusFAIL();
   while(1) ;  
 }
 
 /*
- * setup routine to configure:
+ * Setup routine to configure:
  * - WIFI connection
  * - RFID controller
  * - pins for LEDs
@@ -88,6 +108,16 @@ void setup()
   if (DEBUG) {
     Serial.begin(115200);
   }
+  SPI.begin(); 
+  rfid.init();
+  pinMode(redLedPin, OUTPUT);
+  pinMode(yellowLedPin, OUTPUT);
+  pinMode(greenLedPin, OUTPUT);
+  digitalWrite(redLedPin, HIGH);
+  digitalWrite(greenLedPin, LOW);
+  digitalWrite(yellowLedPin, LOW);
+
+  showProgress(true);
 
   DEBUG_PRINTLN(F("Initialising CC3000 ...")); 
   
@@ -133,6 +163,7 @@ void setup()
     DEBUG_PRINTLN("");
   }
   DEBUG_PRINTLN(F("Finished initialization of CC3000")); 
+  showProgress(false);
 }
 
 /*
@@ -277,7 +308,9 @@ int sendCommand(const char* command, const unsigned char cardNum[5])
  */
 void showStatusOK()
 {
-  DEBUG_PRINTLN(F("OK"));
+  digitalWrite(greenLedPin, HIGH);
+  delay(500);
+  digitalWrite(greenLedPin, LOW);
 }
 
 /*
@@ -285,7 +318,9 @@ void showStatusOK()
  */
 void showStatusWARN()
 {
-  DEBUG_PRINTLN(F("WARN"));
+  digitalWrite(yellowLedPin, HIGH);
+  delay(500);
+  digitalWrite(yellowLedPin, LOW);
 }
 
 /*
@@ -293,7 +328,24 @@ void showStatusWARN()
  */
 void showStatusFAIL()
 {
-  DEBUG_PRINTLN(F("FAIL"));
+  for (int i=0;i<5;i++) {
+    digitalWrite(redLedPin, LOW);
+    delay(100);
+    digitalWrite(redLedPin, HIGH);
+    delay(100);
+  }
+}
+
+/*
+ * yellow LED as setup progress indicator
+ */
+void showProgress(boolean on)
+{
+  if (on) {
+    digitalWrite(yellowLedPin, HIGH);
+  } else {
+    digitalWrite(yellowLedPin, LOW);  
+  }
 }
 
 /*
@@ -311,17 +363,26 @@ void handleCommandStatus(int commandStatus)
 }
 
 /*
- * main loop:
+ * Main loop:
  * - reading RFID card
  * - sending enter/leave commands over WiFi
  * - decoding response and showing the status on leds
  */
 void loop()
 {  
-  int commandStatus = sendCommand(ENTER_COMMAND, cardNum);
-  handleCommandStatus(commandStatus);
-  delay(5000);
-  commandStatus = sendCommand(LEAVE_COMMAND, cardNum);    
-  handleCommandStatus(commandStatus);
-  delay(5000);
+  int commandStatus = COMMAND_OK;
+  if (rfid.isCard() && rfid.readCardSerial()) {
+    if (rfid.serNum[0] == enterCardNum[0] &&
+        rfid.serNum[1] == enterCardNum[1] &&
+        rfid.serNum[2] == enterCardNum[2] && 
+        rfid.serNum[3] == enterCardNum[3] &&
+        rfid.serNum[4] == enterCardNum[4]) {
+      commandStatus = sendCommand(ENTER_COMMAND, enterCardNum);
+      handleCommandStatus(commandStatus);
+    } else {
+      commandStatus = sendCommand(LEAVE_COMMAND, enterCardNum);    
+      handleCommandStatus(commandStatus);
+    }
+  }
+  rfid.halt();
 }

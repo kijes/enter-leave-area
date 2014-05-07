@@ -1,5 +1,5 @@
-Enter Leave Area Project (access control using RFID)
-====================================================
+Enter Leave Area Project
+========================
 
 Arduino project
 ---------------
